@@ -11,11 +11,6 @@ var gameSquares = document.querySelectorAll('.square')
 var replayIcon = "<button class='replay'><i class='fas fa-redo'></i></button>"
 var replayBttn = document.querySelector('.replay')
 
-// fade in body
-setTimeout(function() {
-  document.querySelector('body').classList.remove('fade')
-}, 200)
-
 // function to show game board
 function showGameBoard() {
   gameSquares.forEach(function(square) {
@@ -31,40 +26,6 @@ function showGameBoard() {
     }
   })
 }
-
-// hide gameboard until icon is selected
-showGameBoard()
-
-// add event listeners to buttons
-selectIcon.addEventListener('click', function(e) {
-  if (e.target.className === 'icon') {
-    hideSelectIcon()
-    // set player 1 to selected icon
-    p1 = e.target.textContent
-    if (p1 === 'x') {
-      p2 = 'o'
-    } else {
-      p2 = 'x'
-    }
-  } else if (e.target.className === 'replay' || e.target.className === 'fas fa-redo') {
-    // reset button click
-    p1 = ''
-    p2 = ''
-    turnOf = 1
-    selectIcon.innerHTML = "<button class='icon'>x</button> or <button class='icon'>o</button>"
-    gameSquares.forEach(function(square) {
-      square.innerHTML = ''
-      square.className = 'square'
-      square.classList.add('fade')
-      setTimeout(function() {
-        square.classList.add('hide')
-        square.classList.remove('fade')
-      },1000)
-    })
-  } else {
-    return;
-  }
-})
 
 // fade and then hide icon selection
 function hideSelectIcon() {
@@ -110,6 +71,19 @@ function diagonalWin(icon) {
   }
 }
 
+function draw() {
+  drawCheck = []
+  for (var i = 0; i < gameSquares.length; i++) {
+    if (gameSquares[i].textContent !== '') {
+      drawCheck.push(gameSquares[i])
+    }
+  }
+  if (drawCheck.length === 9) {
+    selectIcon.classList.remove('fade')
+    selectIcon.innerHTML = replayIcon
+  }
+}
+
 // function to check if move triggers win
 function checkIfWin(icon) {
   // check for row wins
@@ -118,7 +92,48 @@ function checkIfWin(icon) {
   columnWin(icon)
   // check diagonal
   diagonalWin(icon)
+  // check draw
+  draw()
 }
+
+// fade in body
+setTimeout(function() {
+  document.querySelector('body').classList.remove('fade')
+}, 200)
+
+// hide gameboard until icon is selected
+showGameBoard()
+
+// add event listeners to buttons
+selectIcon.addEventListener('click', function(e) {
+  if (e.target.className === 'icon') {
+    hideSelectIcon()
+    // set player 1 to selected icon
+    p1 = e.target.textContent
+    if (p1 === 'x') {
+      p2 = 'o'
+    } else {
+      p2 = 'x'
+    }
+  } else if (e.target.className === 'replay' || e.target.className === 'fas fa-redo') {
+    // reset button click
+    p1 = ''
+    p2 = ''
+    turnOf = 1
+    selectIcon.innerHTML = "<button class='icon'>x</button> or <button class='icon'>o</button>"
+    gameSquares.forEach(function(square) {
+      square.innerHTML = ''
+      square.className = 'square'
+      square.classList.add('fade')
+      setTimeout(function() {
+        square.classList.add('hide')
+        square.classList.remove('fade')
+      },1000)
+    })
+  } else {
+    return;
+  }
+})
 
 // add event listeners to board squares
 gameBoard.addEventListener('click', function(e) {
