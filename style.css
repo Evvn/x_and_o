@@ -8,6 +8,7 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
   text-align: center;
+  transition: all 3s ease;
 }
 
 .container {
@@ -24,13 +25,15 @@ body {
   margin: 0 auto;
   width: 200px;
   height: 200px;
-  background-color: white;
+  background-color: black;
   border: 10px solid black;
-  color: black;
 }
 
 .square {
-  border: 10px solid black;
+  transition: all 2s ease;
+  background-color: white;
+  color: white;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,6 +44,7 @@ body {
   margin: 0 auto;
   text-align: justify;
   transition: all 1s ease;
+  height: 40px;
 }
 
 .select-icon:after {
@@ -57,7 +61,7 @@ button {
   font-weight: bold;
   font-size: 100%;
   text-align: center;
-  transition: all .5s ease;
+  transition: all 1s ease;
   outline: none;
   width: 40px;
   height: 40px;
@@ -74,5 +78,9 @@ button:hover {
 }
 
 .hide {
-  display: hidden;
+  display: none;
+}
+
+.show-text {
+  color: black
 }
