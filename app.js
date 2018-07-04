@@ -8,6 +8,8 @@ var oBttn = document.querySelector('.o-bttn')
 var selectIcon = document.querySelector('.select-icon')
 var gameBoard = document.querySelector('.board')
 var gameSquares = document.querySelectorAll('.square')
+var replayIcon = "<button class='replay'><i class='fas fa-redo'></i></button>"
+var replayBttn = document.querySelector('.replay')
 
 // fade in body
 setTimeout(function() {
@@ -35,7 +37,7 @@ showGameBoard()
 
 // add event listeners to buttons
 selectIcon.addEventListener('click', function(e) {
-  if (e.target.type === "submit") {
+  if (e.target.className === 'icon') {
     hideSelectIcon()
     // set player 1 to selected icon
     p1 = e.target.textContent
@@ -44,6 +46,21 @@ selectIcon.addEventListener('click', function(e) {
     } else {
       p2 = 'x'
     }
+  } else if (e.target.className === 'replay' || e.target.className === 'fas fa-redo') {
+    // reset button click
+    p1 = ''
+    p2 = ''
+    turnOf = 1
+    selectIcon.innerHTML = "<button class='icon'>x</button> or <button class='icon'>o</button>"
+    gameSquares.forEach(function(square) {
+      square.innerHTML = ''
+      square.className = 'square'
+      square.classList.add('fade')
+      setTimeout(function() {
+        square.classList.add('hide')
+        square.classList.remove('fade')
+      },1000)
+    })
   } else {
     return;
   }
@@ -58,70 +75,49 @@ function hideSelectIcon() {
   showGameBoard()
 }
 
+// fade all squares without winning icon and display replay button
+function winFade(icon) {
+  for (var i = 0; i < gameSquares.length; i++) {
+    if (gameSquares[i].textContent !== icon) {
+      gameSquares[i].classList.add('fade')
+    }
+  }
+  selectIcon.classList.remove('fade')
+  selectIcon.innerHTML = replayIcon
+}
+
+function rowWin(icon) {
+  for (var i = 0; i < 9; i += 3) {
+    if (gameSquares[i].textContent !== '' && gameSquares[i].textContent === gameSquares[i + 1].textContent && gameSquares[i].textContent === gameSquares[i + 2].textContent) {
+      winFade(icon)
+    }
+  }
+}
+
+function columnWin(icon) {
+  for (var i = 0; i <= 2; i++) {
+    if (gameSquares[i].textContent !== '' && gameSquares[i].textContent === gameSquares[i + 3].textContent && gameSquares[i].textContent === gameSquares[i + 6].textContent) {
+      winFade(icon)
+    }
+  }
+}
+
+function diagonalWin(icon) {
+  for (var i = 0; i <= 2; i += 2) {
+    if (gameSquares[i].textContent !== '' && gameSquares[i].textContent === gameSquares[4].textContent && gameSquares[i].textContent === gameSquares[8 - i].textContent) {
+      winFade(icon)
+    }
+  }
+}
+
 // function to check if move triggers win
 function checkIfWin(icon) {
   // check for row wins
-  if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[1].textContent && gameSquares[0].textContent === gameSquares[2].textContent) {
-    // console.log(icon + ' row 1 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  } else if (gameSquares[3].textContent != '' && gameSquares[3].textContent === gameSquares[4].textContent && gameSquares[3].textContent === gameSquares[5].textContent) {
-    // console.log(icon + ' row 2 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  } else if (gameSquares[6].textContent != '' && gameSquares[6].textContent === gameSquares[7].textContent && gameSquares[6].textContent === gameSquares[8].textContent) {
-    // console.log(icon + ' row 3 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  }
-  // check column
-  else if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[3].textContent && gameSquares[0].textContent === gameSquares[6].textContent) {
-    // console.log(icon + ' column 1 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  } else if (gameSquares[1].textContent != '' && gameSquares[1].textContent === gameSquares[4].textContent && gameSquares[1].textContent === gameSquares[7].textContent) {
-    // console.log(icon + ' column 2 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  } else if (gameSquares[2].textContent != '' && gameSquares[2].textContent === gameSquares[5].textContent && gameSquares[2].textContent === gameSquares[8].textContent) {
-    // console.log(icon + ' column 3 win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  }
+  rowWin(icon)
+  // check for column wins
+  columnWin(icon)
   // check diagonal
-  else if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[4].textContent && gameSquares[0].textContent === gameSquares[8].textContent) {
-    // console.log(icon + ' diagonal backslash win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  } else if (gameSquares[2].textContent != '' && gameSquares[2].textContent === gameSquares[4].textContent && gameSquares[2].textContent === gameSquares[6].textContent) {
-    // console.log(icon + ' diagonal slash win');
-    for (var i = 0; i < gameSquares.length; i++) {
-      if (gameSquares[i].textContent != icon) {
-        gameSquares[i].classList.add('fade')
-      }
-    }
-  }
+  diagonalWin(icon)
 }
 
 // add event listeners to board squares

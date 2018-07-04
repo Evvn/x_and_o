@@ -40,7 +40,7 @@ body {
 }
 
 .select-icon {
-  width: 200px;
+  width: auto;
   margin: 0 auto;
   text-align: justify;
   transition: all 1s ease;
@@ -51,6 +51,9 @@ body {
   content: "";
   display: inline-block;
   width: 100%;
+}
+
+i {
 }
 
 button {
