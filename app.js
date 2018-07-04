@@ -19,7 +19,6 @@ function showGameBoard() {
   gameSquares.forEach(function(square) {
     // if board is hidden, fade it in
     if (square.classList.value === 'square hide') {
-      console.log('fade board in')
       square.classList.remove('hide')
       square.classList.add('fade')
       setTimeout(function() {
@@ -59,24 +58,89 @@ function hideSelectIcon() {
   showGameBoard()
 }
 
+// function to check if move triggers win
+function checkIfWin(icon) {
+  // check for row wins
+  if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[1].textContent && gameSquares[0].textContent === gameSquares[2].textContent) {
+    // console.log(icon + ' row 1 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  } else if (gameSquares[3].textContent != '' && gameSquares[3].textContent === gameSquares[4].textContent && gameSquares[3].textContent === gameSquares[5].textContent) {
+    // console.log(icon + ' row 2 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  } else if (gameSquares[6].textContent != '' && gameSquares[6].textContent === gameSquares[7].textContent && gameSquares[6].textContent === gameSquares[8].textContent) {
+    // console.log(icon + ' row 3 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  }
+  // check column
+  else if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[3].textContent && gameSquares[0].textContent === gameSquares[6].textContent) {
+    // console.log(icon + ' column 1 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  } else if (gameSquares[1].textContent != '' && gameSquares[1].textContent === gameSquares[4].textContent && gameSquares[1].textContent === gameSquares[7].textContent) {
+    // console.log(icon + ' column 2 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  } else if (gameSquares[2].textContent != '' && gameSquares[2].textContent === gameSquares[5].textContent && gameSquares[2].textContent === gameSquares[8].textContent) {
+    // console.log(icon + ' column 3 win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  }
+  // check diagonal
+  else if (gameSquares[0].textContent != '' && gameSquares[0].textContent === gameSquares[4].textContent && gameSquares[0].textContent === gameSquares[8].textContent) {
+    // console.log(icon + ' diagonal backslash win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  } else if (gameSquares[2].textContent != '' && gameSquares[2].textContent === gameSquares[4].textContent && gameSquares[2].textContent === gameSquares[6].textContent) {
+    // console.log(icon + ' diagonal slash win');
+    for (var i = 0; i < gameSquares.length; i++) {
+      if (gameSquares[i].textContent != icon) {
+        gameSquares[i].classList.add('fade')
+      }
+    }
+  }
+}
+
 // add event listeners to board squares
 gameBoard.addEventListener('click', function(e) {
+  // check if click is on a board square
   if (e.target.classList.value === 'square') {
-    console.log('square click')
     // make sure square is empty
     if (e.target.textContent === '') {
-      console.log('empty square')
       // check which players turn it is
       if (turnOf % 2 === 1) {
         // place players icon
-        console.log('player 1')
         e.target.textContent = p1
         // fade in player move
         e.target.classList.add('show-text')
+        checkIfWin(p1)
       } else {
-        console.log('player 2')
         e.target.textContent = p2
         e.target.classList.add('show-text')
+        checkIfWin(p2)
       }
       // next turn
       turnOf++
@@ -85,7 +149,7 @@ gameBoard.addEventListener('click', function(e) {
       return;
     }
   } else {
-    console.log('not square click')
+    // not square click, exit function
     return;
   }
 })

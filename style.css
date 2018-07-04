@@ -30,7 +30,7 @@ body {
 }
 
 .square {
-  transition: all 2s ease;
+  transition: all 1s ease;
   background-color: white;
   color: white;
   margin: 10px;
