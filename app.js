@@ -106,7 +106,7 @@ showGameBoard()
 
 // add event listeners to buttons
 selectIcon.addEventListener('click', function(e) {
-  if (e.target.className === 'icon') {
+  if (e.target.className === 'icon' && e.target.parentNode.className !== 'select-icon fade' && gameSquares[0].className === 'square hide') {
     hideSelectIcon()
     // set player 1 to selected icon
     p1 = e.target.textContent
@@ -156,7 +156,7 @@ gameBoard.addEventListener('click', function(e) {
       // next turn
       turnOf++
     } else {
-      console.log('not empty square')
+      // not empty square, exit function
       return;
     }
   } else {
