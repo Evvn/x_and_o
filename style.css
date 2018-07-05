@@ -87,3 +87,23 @@ button:hover {
 .show-text {
   color: black
 }
+
+.breakout {
+  position: relative;
+}
+
+.breakout a{
+  font-size: 25%;
+  text-decoration: none;
+  color: white;
+  padding: 2px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transition: all 1s ease;
+}
+
+.breakout a:hover{
+  background-color: white;
+  color: black;
+}
