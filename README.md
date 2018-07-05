@@ -1,4 +1,3 @@
 # x & o
 
-**play**
-[x & o](https://github.com/Evvn/x_and_o)
+[play x & o](https://evvn.github.io/x_and_o/)
