@@ -1,4 +1,4 @@
-console.log('x and o by the weeknd');
+console.log('thank you :)\n-Evan');
 
 var p1 = ''
 var p2 = ''
