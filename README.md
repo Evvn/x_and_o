@@ -12,7 +12,7 @@
 
 
 ## best beans 🦄
-+ ** fades and transitions ** love hate relationship I guess
++ **fades and transitions** love/hate relationship I guess
 
 
 ## how you check for wins 🌚
